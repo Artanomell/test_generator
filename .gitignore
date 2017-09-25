@@ -99,3 +99,7 @@ ENV/
 
 # mypy
 .mypy_cache/
+applications/examples/
+applications/test_generator/errors/
+applications/welcome/
+examples/
