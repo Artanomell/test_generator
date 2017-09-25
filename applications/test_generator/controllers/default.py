@@ -19,8 +19,9 @@ def index():
     if you need a simple wiki simply replace the two lines below with:
     return auth.wiki()
     """
-    response.flash = T("Hello World")
-    return dict(message=T('Welcome to web2py!'))
+    return redirect('test_generator/default/generate')
+    # response.flash = T("Hello World")
+    # return dict(message=T('Welcome to web2py!'))
 
 
 def user():
@@ -70,15 +71,15 @@ def generate():
     #     return p.output(dest='S')
     # else:
     form = FORM(
-        H3(u'Сид'),
-        INPUT(_name='name'),
-        BUTTON('Отправить',_type='submit')
+        H3(u'Строка для генерации задания'),
+        INPUT(_name=u'name'),
+        BUTTON(u'Отправить',_type=u'submit')
     )
     if form.process().accepted:
         SUB = TAG.sub
         rnd = random.Random(form.vars['name'])
-        template = '<li><p>%s<sub>%s</sub> -&gt; X<sub>%s</sub></p><li>'
-        template2 = '<li><p>%s<sub>%s</sub> -&gt; X<sub>%s</sub> -&gt; X<sub>%s</sub></p><li>'
+        template = u'<li><p>%s<sub>%s</sub> -&gt; X<sub>%s</sub></p><li>'
+        template2 = u'<li><p>%s<sub>%s</sub> -&gt; X<sub>%s</sub> -&gt; X<sub>%s</sub></p><li>'
         arr1 = (map(
             lambda a:LI(P(str(a[0]).replace('0o', '').replace('0b','').replace('0x','').capitalize(), SUB(a[1]), '-> X', SUB(a[2]))),
             (
@@ -99,7 +100,11 @@ def generate():
             )))
 
 
-        return dict(body=DIV(H3(u'Ваше задание'),OL(arr1+arr2)))
+        return dict(body=DIV(
+            H3(u'Задание'),
+            OL(arr1+arr2),
+            A(BUTTON(u'Обновить'), _href='')
+        ))
     elif form.errors:
         return dict(body=form)
     return dict(body=form)
