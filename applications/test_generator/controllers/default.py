@@ -19,7 +19,13 @@ def index():
     if you need a simple wiki simply replace the two lines below with:
     return auth.wiki()
     """
-    return redirect('test_generator/default/generate')
+    return dict(content=DIV(
+        OL(
+            LI(A('Лабораторная работа 1, часть 1', href=URL('test_generator', 'default', 'lab1_1'))),
+            LI(A('Лабораторная работа 1, часть 2', href=URL('test_generator', 'default', 'lab1_2'))),
+        )
+    ))
+    # return redirect('test_generator/default/generate')
     # response.flash = T("Hello World")
     # return dict(message=T('Welcome to web2py!'))
 
@@ -61,7 +67,7 @@ def call():
     """
     return service()
 
-def generate():
+def lab1_1():
     # if session.get('name', None):
     #     p = pdf.FPDF()
     #     p.add_page()
@@ -103,6 +109,120 @@ def generate():
         return dict(body=DIV(
             H3(u'Задание'),
             OL(arr1+arr2),
+            A(BUTTON(u'Обновить'), _href='')
+        ))
+    elif form.errors:
+        return dict(body=form)
+    return dict(body=form)
+
+
+
+def lab1_2():
+    # if session.get('name', None):
+    #     p = pdf.FPDF()
+    #     p.add_page()
+    #     p.set_font('Arial', '', 16)
+    #     p.text(10,10,str(('asdasdsadsasdsddsaasd\nsdfsafsfsf')))
+    #     response.headers['Content-Type'] = 'application/pdf'
+    #     return p.output(dest='S')
+    # else:
+    form = FORM(
+        H3(u'Строка для генерации задания'),
+        INPUT(_name=u'name'),
+        BUTTON(u'Отправить',_type=u'submit')
+    )
+    if form.process().accepted:
+        SUB = TAG.sub
+        rnd = random.Random(form.vars['name'])
+        norm_num = lambda s:str(s).replace('0o', '').replace('0b','').replace('0x','').capitalize()
+        arr1 = (map(
+            lambda a:LI(
+                P(norm_num(a[0]),
+                  '.',
+                  norm_num(a[1]),
+                  SUB(a[2]),
+                  '-> X',
+                  SUB(a[3]))),
+            (
+            (rnd.randint(10, 256),rnd.randint(10, 512), 10, 2),
+            (bin(rnd.randint(10, 256)),bin(rnd.randint(10, 512)), 2, 10),
+            rnd.choice([
+                (hex(rnd.randint(10, 256)),hex(rnd.randint(10, 512)), 16, 10),
+                (oct(rnd.randint(10, 256)),oct(rnd.randint(10, 512)), 8, 10),
+            ]),
+        )))
+
+        # arr2 = (map(
+        #     lambda a: LI(
+        #         P(
+        #             norm_num(a),
+        #             '-> обратный код'
+        #         )
+        #     ),(
+        #         bin(rnd.randint(250, 1024)),
+        #         bin(rnd.randint(250, 1024)),
+        #     )
+        # )
+        # )
+
+        arr2 = map(
+            lambda a: LI(
+                P(
+                    'Имеется фотография с разрешением ',
+                    a[0],
+                    'x',
+                    a[1],
+                    ' пикселей с количеством цветов ',
+                    a[2],
+                    '. Задание: расчитать вес картинки в Мбайтах'
+                )
+            ),(
+                (rnd.randint(640,1981), rnd.randint(480,1081), rnd.randint(2,33)),
+            )
+        )
+
+        arr3 = map(
+            lambda a: LI(
+                P(
+                    'Имеется аудиофаил длительностью ',
+                    a[0],
+                    ' секунд, битрейтом',
+                    a[1],
+                    ' и чуствительностью ',
+                    a[2],
+                    'бит. Задание: расчитать вес аудиофайла в Кбайтах'
+                )
+            ),(
+                (rnd.randint(30,241), rnd.randint(32,1025), rnd.randint(4,33)),
+            )
+        )
+
+        # arr4 = map(
+        #     lambda a: LI(
+        #         P(
+        #             'Дано:',
+        #             BR,
+        #             'Событие А - ',
+        #             a[0],
+        #             ' секунд, битрейтом',
+        #             a[1],
+        #             ' и чуствительностью ',
+        #             a[2],
+        #             'бит. Задание: расчитать вес аудиофайла в Кбайтах'
+        #         )
+        #     ), (
+        #         (
+        #             rnd.choice(['На улице светло', 'На улице дождь', 'На улице ночь']),
+        #             rnd.choice(['у меня нету пар', 'есть пары', 'много дел']),
+        #             rnd.choice(['у меня нету пар', 'есть пары', 'много дел']),
+        #         ),
+        #     )
+        # )
+
+
+        return dict(body=DIV(
+            H3(u'Задание'),
+            OL(arr1 + arr2 + arr3),
             A(BUTTON(u'Обновить'), _href='')
         ))
     elif form.errors:
