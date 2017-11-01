@@ -21,8 +21,8 @@ def index():
     """
     return dict(content=DIV(
         OL(
-            LI(A('Лабораторная работа 1, часть 1', href=URL('test_generator', 'default', 'lab1_1'))),
-            LI(A('Лабораторная работа 1, часть 2', href=URL('test_generator', 'default', 'lab1_2'))),
+            LI(A('Практическая работа 1, часть 1', _href=URL('test_generator', 'default', 'lab1_1'))),
+            LI(A('Практическая работа 1, часть 2', _href=URL('test_generator', 'default', 'lab1_2'))),
         )
     ))
     # return redirect('test_generator/default/generate')
@@ -96,6 +96,11 @@ def lab1_1():
             (hex(rnd.randint(100, 2048)), 16, 10),
             (rnd.randint(100, 2048), 10, 16),
         )))
+        buf = []
+        n = len(arr1)
+        for i in range(3):
+            buf.append(arr1.pop(rnd.randint(0,n-i-1)))
+        arr1 = buf
 
         arr2 = (map(
             lambda a: LI(P(str(a[0]).replace('0o', '').replace('0b', '').replace('0x', '').capitalize(), SUB(a[1]), ' -> X', SUB(a[2]), ' -> X', SUB(a[3]))),
@@ -105,15 +110,20 @@ def lab1_1():
                 (oct(rnd.randint(128, 4096)), 8, 16, 2)
             )))
 
+        buf = []
+        n = len(arr2)
+        for i in range(2):
+            buf.append(arr2.pop(rnd.randint(0, n-i-1)))
+        arr2 = buf
 
-        return dict(body=DIV(
+        return dict(content=DIV(
             H3(u'Задание'),
             OL(arr1+arr2),
             A(BUTTON(u'Обновить'), _href='')
         ))
     elif form.errors:
-        return dict(body=form)
-    return dict(body=form)
+        return dict(content=form)
+    return dict(content=form)
 
 
 
@@ -186,9 +196,9 @@ def lab1_2():
                 P(
                     'Имеется аудиофаил длительностью ',
                     a[0],
-                    ' секунд, битрейтом',
+                    ' секунд, частота',
                     a[1],
-                    ' и чуствительностью ',
+                    'Гц и битностью ',
                     a[2],
                     'бит. Задание: расчитать вес аудиофайла в Кбайтах'
                 )
@@ -220,11 +230,11 @@ def lab1_2():
         # )
 
 
-        return dict(body=DIV(
+        return dict(content=DIV(
             H3(u'Задание'),
             OL(arr1 + arr2 + arr3),
             A(BUTTON(u'Обновить'), _href='')
         ))
     elif form.errors:
-        return dict(body=form)
-    return dict(body=form)
+        return dict(content=form)
+    return dict(content=form)
