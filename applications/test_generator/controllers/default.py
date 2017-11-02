@@ -9,7 +9,7 @@
 # -------------------------------------------------------------------------
 import random
 from gluon.contrib.pyfpdf import FPDF, HTMLMixin
-import gluon.contrib.markdown as markdown
+
 
 def index():
     """
@@ -86,7 +86,7 @@ def lab1_1():
         rnd = random.Random(form.vars['name'])
         template = u'<li><p>%s<sub>%s</sub> -&gt; X<sub>%s</sub></p><li>'
         template2 = u'<li><p>%s<sub>%s</sub> -&gt; X<sub>%s</sub> -&gt; X<sub>%s</sub></p><li>'
-        arr1 = (map(
+        arr1 = list(map(
             lambda a:LI(P(str(a[0]).replace('0o', '').replace('0b','').replace('0x','').capitalize(), SUB(a[1]), '-> X', SUB(a[2]))),
             (
             (rnd.randint(100, 1025), 10, 2),
@@ -102,7 +102,7 @@ def lab1_1():
             buf.append(arr1.pop(rnd.randint(0,n-i-1)))
         arr1 = buf
 
-        arr2 = (map(
+        arr2 = list(map(
             lambda a: LI(P(str(a[0]).replace('0o', '').replace('0b', '').replace('0x', '').capitalize(), SUB(a[1]), ' -> X', SUB(a[2]), ' -> X', SUB(a[3]))),
             (
                 (bin(rnd.randint(128, 4096)), 2, 16, 8),
@@ -145,7 +145,7 @@ def lab1_2():
         SUB = TAG.sub
         rnd = random.Random(form.vars['name'])
         norm_num = lambda s:str(s).replace('0o', '').replace('0b','').replace('0x','').capitalize()
-        arr1 = (map(
+        arr1 = list(map(
             lambda a:LI(
                 P(norm_num(a[0]),
                   '.',
@@ -175,7 +175,7 @@ def lab1_2():
         # )
         # )
 
-        arr2 = map(
+        arr2 = list(map(
             lambda a: LI(
                 P(
                     'Имеется фотография с разрешением ',
@@ -189,9 +189,9 @@ def lab1_2():
             ),(
                 (rnd.randint(640,1981), rnd.randint(480,1081), rnd.randint(2,33)),
             )
-        )
+        ))
 
-        arr3 = map(
+        arr3 = list(map(
             lambda a: LI(
                 P(
                     'Имеется аудиофаил длительностью ',
@@ -205,7 +205,7 @@ def lab1_2():
             ),(
                 (rnd.randint(30,241), rnd.randint(32,1025), rnd.randint(4,33)),
             )
-        )
+        ))
 
         # arr4 = map(
         #     lambda a: LI(
