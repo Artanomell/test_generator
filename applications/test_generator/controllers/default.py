@@ -238,3 +238,73 @@ def lab1_2():
     elif form.errors:
         return dict(content=form)
     return dict(content=form)
+
+def lab_1461_2():
+
+    form = FORM(
+        H3(u'Строка для генерации задания'),
+        INPUT(_name=u'name'),
+        BUTTON(u'Отправить', _type=u'submit')
+    )
+
+    if form.process().accepted:
+        SUB = TAG.sub
+        rnd = random.Random(form.vars['name'])
+        norm_num = lambda s: str(s).replace('0o', '').replace('0b', '').replace('0x', '').capitalize()
+        task1 = list(map(
+            lambda a: LI(
+                P(norm_num(a[0]),
+                  '.',
+                  norm_num(a[1]),
+                  SUB(a[2]),
+                  '-> X',
+                  SUB(a[3]))),
+            (
+                (rnd.randint(10, 256), rnd.randint(10, 512), 10, 2),
+                (bin(rnd.randint(10, 256)), bin(rnd.randint(10, 512)), 2, 10),
+                rnd.choice([
+                    (hex(rnd.randint(10, 256)), hex(rnd.randint(10, 512)), 16, 10),
+                    (oct(rnd.randint(10, 256)), oct(rnd.randint(10, 512)), 8, 10),
+                ]),
+            )))
+
+
+
+        buf_a = rnd.randint(2, 8)
+        buf_b = bin(rnd.randint(0, 2**buf_a) ^ rnd.choice([1 << buf_a, 0])).replace('0b', '')
+
+
+        task3 = [LI(
+                P(
+                    'Отпределить больше или меньше это число нуля. Число: ',
+                    buf_b,
+                    " при условии, что разрядность числа равна ",
+                    buf_a
+                )
+            )]
+
+
+        task4 = [LI(
+            P(
+                'Найти обратный код к числу ',
+                bin(rnd.randint(10, 255)).replace('0b', '')
+            )
+        )]
+
+        task5 = [LI(
+            P(
+                'Найти дополнительный код для числа ',
+                bin(rnd.randint(10,255)).replace('0b', '')
+            )
+        )]
+
+
+
+
+        return dict(content=DIV(
+            H3(u'Задание'),
+            OL(task1 + task3 + task4 + task5),
+            A(BUTTON(u'Обновить'), _href='')
+        ))
+    else:
+        return dict(content=form)

@@ -29,7 +29,10 @@ response.google_analytics_id = None
 # ----------------------------------------------------------------------------------------------------------------------
 
 response.menu = [
-    (T('Home'), False, URL('default', 'index'), [])
+    (T('Home'), False, URL('default', 'index'), []),
+    (T('Задания'), False, '#', [
+        (T('Задание 2'), URL() == URL('lab_1461_2'), URL('lab_1461_2'), [])
+    ])
 ]
 
 DEVELOPMENT_MENU = True
