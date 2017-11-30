@@ -19,11 +19,21 @@ def index():
     if you need a simple wiki simply replace the two lines below with:
     return auth.wiki()
     """
+
     return dict(content=DIV(
+        T('1c61б и 1361б'),
         OL(
             LI(A('Практическая работа 1, часть 1', _href=URL('test_generator', 'default', 'lab1_1'))),
             LI(A('Практическая работа 1, часть 2', _href=URL('test_generator', 'default', 'lab1_2'))),
-        )
+        ),
+        BR(),
+        T('1461б'),
+        OL(
+            LI(A('Практическая работа 1', _href=URL('test_generator', 'default', 'lab1_1'))),
+            LI(A('Практическая работа 2', _href=URL('test_generator', 'default', 'lab_1461_2'))),
+            LI(A('Практическая работа 3', _href=URL('test_generator', 'default', 'lab_1461_3'))),
+        ),
+
     ))
     # return redirect('test_generator/default/generate')
     # response.flash = T("Hello World")
@@ -77,7 +87,7 @@ def lab1_1():
     #     return p.output(dest='S')
     # else:
     form = FORM(
-        H3(u'Строка для генерации задания'),
+        H3(u'Введите вашу фамилию маленькими буквами'),
         INPUT(_name=u'name'),
         BUTTON(u'Отправить',_type=u'submit')
     )
@@ -137,7 +147,7 @@ def lab1_2():
     #     return p.output(dest='S')
     # else:
     form = FORM(
-        H3(u'Строка для генерации задания'),
+        H3(u'Введите вашу фамилию маленькими буквами'),
         INPUT(_name=u'name'),
         BUTTON(u'Отправить',_type=u'submit')
     )
@@ -242,7 +252,7 @@ def lab1_2():
 def lab_1461_2():
 
     form = FORM(
-        H3(u'Строка для генерации задания'),
+        H3(u'Введите вашу фамилию маленькими буквами'),
         INPUT(_name=u'name'),
         BUTTON(u'Отправить', _type=u'submit')
     )
@@ -313,7 +323,7 @@ def lab_1461_2():
 def lab_1461_3():
 
     form = FORM(
-        H3(u'Строка для генерации задания'),
+        H3(u'Введите вашу фамилию маленькими буквами'),
         INPUT(_name=u'name'),
         BUTTON(u'Отправить', _type=u'submit')
     )

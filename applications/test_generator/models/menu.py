@@ -5,9 +5,9 @@
 # Customize your APP title, subtitle and menus here
 # ----------------------------------------------------------------------------------------------------------------------
 
-response.logo = A(B('web', SPAN(2), 'py'), XML('&trade;&nbsp;'),
-                  _class="navbar-brand", _href="http://www.web2py.com/",
-                  _id="web2py-logo")
+response.logo = SPAN()#A(B('web', SPAN(2), 'py'), XML('&trade;&nbsp;'),
+                  # _class="navbar-brand", _href="http://www.web2py.com/",
+                  # _id="web2py-logo")
 response.title = request.application.replace('_', ' ').title()
 response.subtitle = ''
 
@@ -29,14 +29,20 @@ response.google_analytics_id = None
 # ----------------------------------------------------------------------------------------------------------------------
 
 response.menu = [
-    (T('Home'), False, URL('default', 'index'), []),
+    (T('На главную'), False, URL('default', 'index'), []),
     (T('Задания'), False, '#', [
+        (B('1461'), False, '#', []),
+        (T('Задание 1'), URL() == URL('lab1_1'), URL('lab1_1'), []),
         (T('Задание 2'), URL() == URL('lab_1461_2'), URL('lab_1461_2'), []),
         (T('Задание 3'), URL() == URL('lab_1461_3'), URL('lab_1461_3'), []),
-    ])
+        LI(_class="divider"),
+        (B('1c61б и 1361б'), False, '#', []),
+        (T('Практическая работа 1, часть 1'), URL() == URL('lab1_1'), URL('lab1_1'), []),
+        (T('Практическая работа 1, часть 2'), URL() == URL('lab1_2'), URL('lab1_2'), []),
+    ]),
 ]
 
-DEVELOPMENT_MENU = True
+DEVELOPMENT_MENU = False
 
 
 # ----------------------------------------------------------------------------------------------------------------------
